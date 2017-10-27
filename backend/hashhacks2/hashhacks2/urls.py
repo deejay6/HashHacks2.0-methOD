@@ -15,8 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from APIs.views import signupView
+from APIs.views import signupView, loginView, isactiveView, createLoanView, loanDisplayView, loanGivenView, paymentView
 urlpatterns = [
+    url(r'^api/payment', paymentView),
+    url(r'^api/laongiven', loanGivenView),
+    url(r'^api/loandisplay', loanDisplayView),
+    url(r'^api/createloan', createLoanView),
+    url(r'^api/isactive', isactiveView),
     url(r'^api/signup', signupView),
+    url(r'^api/login', loginView),
     url(r'^admin/', admin.site.urls),
 ]

@@ -9,25 +9,26 @@ class profileModel(models.Model):
     aadhar = models.CharField(max_length=20)
     gender = models.CharField(max_length=10)
     address = models.CharField(max_length=50)
-    phone = models.CharField(max_length=20, primary_key=True)
+    phone = models.IntegerField(primary_key=True)
     dob = models.CharField(max_length=20)
     facebookID = models.CharField(max_length=50)
     twitterID = models.CharField(max_length=50)
-    creditRating = models.IntegerField(default=0)
+    password = models.CharField(max_length=50)
+    creditRating = models.CharField(max_length=5)
     interestRate = models.IntegerField(default=0)
     isBorrower = models.BooleanField(default=True)
-
-class loanGivenModel(models.Model):
-    personID = models.ForeignKey(profileModel, on_delete=models.CASCADE)
-    amount = models.IntegerField(default=0)
-    createdOn = models.DateTimeField(auto_now_add=True)
 
 class loanNeededModel(models.Model):
     purpose = models.CharField(max_length=50)
     personID = models.ForeignKey(profileModel, on_delete=models.CASCADE)
-    loanGivenID = models.ForeignKey(loanGivenModel, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
     interest = models.IntegerField(default=0)
     tenure = models.IntegerField(default=0)
     riskCategory = models.CharField(max_length=5)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+class loanGivenModel(models.Model):
+    personID = models.ForeignKey(profileModel, on_delete=models.CASCADE)
+    amount = models.IntegerField(default=0)
+    loanID = models.ForeignKey(loanNeededModel, on_delete=models.CASCADE)
+    createdOn = models.DateTimeField(auto_now_add=True)
