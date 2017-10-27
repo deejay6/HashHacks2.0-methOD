@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from APIs.views import signupView
 urlpatterns = [
+    url(r'^api/signup', signupView),
     url(r'^admin/', admin.site.urls),
 ]
