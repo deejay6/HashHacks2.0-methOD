@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.method.hashhacks_android.R;
+import com.method.hashhacks_android.activities.LenderActivity;
+import com.method.hashhacks_android.activities.LoginActivity;
+import com.method.hashhacks_android.api.LenderApi;
 import com.method.hashhacks_android.models.LoanNeeded;
 
 import java.util.ArrayList;
@@ -20,6 +24,13 @@ import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.TableHeaderAdapter;
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by piyush0 on 27/10/17.
@@ -43,15 +54,33 @@ public class ActiveBorrowersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_active_borrowers, container, false);
         fetchLoans();
-        initViews(view);
+
 
         return view;
     }
 
     private void fetchLoans() {
-        //TODO
+        String url = getResources().getString(R.string.url);
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(url).build();
 
-        loans = LoanNeeded.getLoanNeeded();
+        LenderApi lenderApi = retrofit.create(LenderApi.class);
+
+        lenderApi.getLoanDisplay(getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<ArrayList<LoanNeeded>>() {
+            @Override
+            public void onResponse(Call<ArrayList<LoanNeeded>> call, Response<ArrayList<LoanNeeded>> response) {
+                if (response.body() != null) {
+                    loans = response.body();
+                    initViews(view);
+                } else {
+                    Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<LoanNeeded>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void initViews(View view) {

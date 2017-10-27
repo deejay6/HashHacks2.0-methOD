@@ -8,6 +8,15 @@ package com.method.hashhacks_android.models;
 public class Borrower {
     private String ID, purpose, tenure, timeLeft;
     private Integer amountRemaining, interest, amount;
+    private Boolean isActive;
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 
     public static Borrower getBorrower() {
         Borrower retVal = new Borrower("1", "Shaadi", "15 months", "10 days", 150, 8, 1000);

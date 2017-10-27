@@ -1,12 +1,22 @@
 package com.method.hashhacks_android.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.method.hashhacks_android.R;
+import com.method.hashhacks_android.api.BorrowerApi;
+import com.method.hashhacks_android.models.Borrower;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BorrowerInactiveActivity extends AppCompatActivity {
 
@@ -24,7 +34,33 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO;
+                String url = getString(R.string.url);
+                Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(url).build();
+
+                BorrowerApi borrowerApi = retrofit.create(BorrowerApi.class);
+                BorrowerApi.LoanDetail loanDetail = new BorrowerApi.LoanDetail(etPurpose.getText().toString(),
+                        etTenure.getText().toString(),
+                        Integer.valueOf(etAmount.getText().toString()));
+                borrowerApi.createLoan(loanDetail, getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.body() != null) {
+
+//                            String loadId = response.body();
+
+                            Intent i = new Intent(BorrowerInactiveActivity.this, BorrowerActiveActivity.class);
+                            startActivity(i);
+
+                        } else {
+                            Toast.makeText(BorrowerInactiveActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+
+                    }
+                });
             }
         });
     }

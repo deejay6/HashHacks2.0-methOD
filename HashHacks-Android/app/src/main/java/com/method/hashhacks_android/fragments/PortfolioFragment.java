@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.method.hashhacks_android.R;
+import com.method.hashhacks_android.activities.LoginActivity;
+import com.method.hashhacks_android.api.LenderApi;
 import com.method.hashhacks_android.models.LoanGiven;
 import com.method.hashhacks_android.models.LoanNeeded;
 
@@ -21,6 +24,13 @@ import de.codecrafters.tableview.TableDataAdapter;
 import de.codecrafters.tableview.TableHeaderAdapter;
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by piyush0 on 28/10/17.
@@ -42,7 +52,27 @@ public class PortfolioFragment extends Fragment {
     }
 
     private void fetchLoanGiven() {
-        loanGivens = LoanGiven.getLoanGiven();
+        String url = getResources().getString(R.string.url);
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(url).build();
+
+        LenderApi lenderApi = retrofit.create(LenderApi.class);
+
+        lenderApi.getLoanGiven(getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<ArrayList<LoanGiven>>() {
+            @Override
+            public void onResponse(Call<ArrayList<LoanGiven>> call, Response<ArrayList<LoanGiven>> response) {
+                if (response.body() != null) {
+                    loanGivens = response.body();
+                    initViews(view);
+                } else {
+                    Toast.makeText(getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<LoanGiven>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Nullable
@@ -50,8 +80,6 @@ public class PortfolioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_portfolio, container, false);
         fetchLoanGiven();
-        initViews(view);
-
         return view;
     }
 

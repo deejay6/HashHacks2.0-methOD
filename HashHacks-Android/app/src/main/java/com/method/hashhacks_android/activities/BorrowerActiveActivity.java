@@ -4,9 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.method.hashhacks_android.R;
+import com.method.hashhacks_android.api.BorrowerApi;
 import com.method.hashhacks_android.models.Borrower;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BorrowerActiveActivity extends AppCompatActivity {
     TextView tvID, tvPurpose, tvAmount, tvInterest, tvTenure, tvTimeLeft, tvAmountRemaining;
@@ -21,7 +29,7 @@ public class BorrowerActiveActivity extends AppCompatActivity {
         fetchBorrower();
 
         initViews();
-        setViews();
+
     }
 
     private void setViews() {
@@ -47,7 +55,30 @@ public class BorrowerActiveActivity extends AppCompatActivity {
 
     private void fetchBorrower() {
         // TODO
-        borrower = Borrower.getBorrower();
+//        borrower = Borrower.getBorrower();
+
+        String url = getString(R.string.url);
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(url).build();
+
+        BorrowerApi borrowerApi = retrofit.create(BorrowerApi.class);
+
+        borrowerApi.getBorrower(getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<Borrower>() {
+            @Override
+            public void onResponse(Call<Borrower> call, Response<Borrower> response) {
+                if (response.body() != null) {
+                    borrower = response.body();
+                    setViews();
+                } else {
+                    Toast.makeText(BorrowerActiveActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Borrower> call, Throwable t) {
+
+            }
+        });
+
     }
 
 }
