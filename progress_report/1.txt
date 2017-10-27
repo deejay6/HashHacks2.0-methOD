@@ -1,0 +1,6 @@
+The development has been smooth so far. Here are some pointers for the same:
+1. The idea has been discussed in depth and mockups for all the phases has been chalked down.
+2. Database has been penned down and created at the backend.
+3. Progress with the android app has been pretty good. The basic activity screens has been created.
+4. APIs are being created and tested. Later, integration and testing with the app will be done.
+5. Data for tarining the Machine Learning models is being collected and processed.
