@@ -1,4 +1,4 @@
-package com.method.hashhacks_android;
+package com.method.hashhacks_android.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
+
+import com.method.hashhacks_android.R;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText etMobile, etPassword;
-
     Button btnLogin, btnSignup;
 
     @Override
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (isBorrower()) {
 
                 } else {
-                    Intent i = new Intent(LoginActivity.this, ActiveBorrowerActivity.class);
+                    Intent i = new Intent(LoginActivity.this, LenderActivity.class);
                     startActivity(i);
                 }
 
