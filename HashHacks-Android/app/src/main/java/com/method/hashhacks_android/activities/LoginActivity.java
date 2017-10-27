@@ -12,7 +12,7 @@ import com.method.hashhacks_android.R;
 public class LoginActivity extends AppCompatActivity {
 
     EditText etMobile, etPassword;
-    Button btnLogin, btnSignup;
+    Button btnLogin, btnSignup, btnBorrower;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,15 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnBorrower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, BorrowerActiveActivity.class);
+                startActivity(i);
+
+            }
+        });
     }
 
 
@@ -59,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.et_login_password);
         btnLogin = (Button) findViewById(R.id.btn_login_enter);
         btnSignup = (Button) findViewById(R.id.btn_login_signup);
-
+        btnBorrower = (Button) findViewById(R.id.btn_borrowerSingIn);
 
     }
 }

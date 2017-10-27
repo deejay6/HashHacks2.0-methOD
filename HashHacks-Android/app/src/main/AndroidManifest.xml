@@ -20,7 +20,9 @@
         <activity
             android:name=".activities.LenderActivity"
             android:label="@string/title_activity_active_borrower"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.BorrowerActiveActivity" />
+        <activity android:name=".activities.BorrowerInactiveActivity"></activity>
     </application>
 
 </manifest>
