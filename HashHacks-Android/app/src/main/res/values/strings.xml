@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">HashHacks-Android</string>
+    <string name="borrower">Borrower</string>
+    <string name="lender">Lender</string>
+    <string name="title_activity_active_borrower">ActiveBorrowerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
