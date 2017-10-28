@@ -51,18 +51,15 @@ The line of credit can be considered as collateral by a potential creditor, know
 
 What if a user like Bob is unable to provide sufficient collateral for the loan due to either: 1) his wealth status living in a developing country, or 2) providing collateral in the traditional sense would reveal his pseudonym's identity?
 
-One possible solution is for Bob to purchase collateral from a distributed collateralized trust or dCT. A dCT is a collection of users that pool a certain value of funds in essentially a term deposit. This term deposit serves as collateral for a loan in the event that the borrower defaults. In return for this risk, the borrower pays each member of the trust a fee that makes up the effective interest rate of the term deposit. Using the example thus far, Bob purchases 100 mBTC collateral from a 10 member dCT at the price of 10 mBTC. Under this arrangement, each member of the dCT risks 10 mBTC for a term of 1 year for a return of 1 mBTC (or roughly 10% p.a.), paid for in advance by Bob's fee
-
-Alternatively, Alice could forgo Bob's collateral in favor of a 10 mBTC downpayment upfront. However, Alice will not be compensated if there is a default on the loan. This option could be viable if Alice routinely lends funds to Bob and extends to him a sufficient level of trust.
+One possible solution is for Bob to purchase collateral from a distributed collateralized trust or dCT. A dCT is a collection of users that pool a certain value of funds in essentially a term deposit. This term deposit serves as collateral for a loan in the event that the borrower defaults. In return for this risk, the borrower pays each member of the trust a fee that makes up the effective interest rate of the term deposit. 
 
 dCTs however, confer a number of advantages:
 
-Overall level of risk is spread
-Multiple layers of due diligence
-Both the creditor and the dCT will need to evaluate the profitability of lending to Bob, decreasing the chances of spurious lending
-The dCT can also examine the track record of the creditor, Alice, for their success in picking borrowers
-The purpose of the loan can be interrogated, and if possible, funds can incrementally be released
-Promotes liquidity
-The creditor has, in effect, insurance in lending
-The level of risk that is an obstacle for the lender is now lower than the level of risk for each member of the dCT, making relatively capital-intensive loans possible
-A dCT is not necessarily appropriate for small-medium sized loans, as a borrow can crowd-source the loan as the level of risk is especially low. However, it will be up to the creditor to evaluate their level of risk tolerance and what steps they take to manage that risk.
+Overall level of risk is spread <br />
+Multiple layers of due diligence <br />
+Both the creditor and the dCT will need to evaluate the profitability of lending to Bob, decreasing the chances of spurious lending <br />
+The dCT can also examine the track record of the creditor, Alice, for their success in picking borrowers <br />
+The purpose of the loan can be interrogated, and if possible, funds can incrementally be released <br />
+Promotes liquidity <br />
+The creditor has, in effect, insurance in lending <br />
+The level of risk that is an obstacle for the lender is now lower than the level of risk for each member of the dCT, making relatively capital-intensive loans possible <br />
