@@ -7,9 +7,9 @@ from django.db import models
 class profileModel(models.Model):
     name = models.CharField(max_length=20)
     aadhar = models.CharField(max_length=20)
-    gender = models.CharField(max_length=10)
+    gender = models.BooleanField(default=True)
     address = models.CharField(max_length=50)
-    phone = models.IntegerField(primary_key=True)
+    phone = models.CharField(max_length=50, primary_key=True)
     dob = models.CharField(max_length=20)
     facebookID = models.CharField(max_length=50)
     twitterID = models.CharField(max_length=50)
@@ -26,6 +26,9 @@ class loanNeededModel(models.Model):
     tenure = models.IntegerField(default=0)
     riskCategory = models.CharField(max_length=5)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.purpose
 
 class loanGivenModel(models.Model):
     personID = models.ForeignKey(profileModel, on_delete=models.CASCADE)

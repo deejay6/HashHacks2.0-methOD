@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.db.models import Q
 from django.shortcuts import render
+from django.http import HttpResponse
 from models import profileModel, loanGivenModel, loanNeededModel
 # Create your views here.
 
@@ -19,22 +20,23 @@ def signupView(request):
         address = data['address']
         aadhar = data['aadhar']
         dob = data['dob']
-        fb = data['fb']
+        fb = data['facebook']
+        gender = data['isMale']
         twitter = data['twitter']
-        bool = data['bool']
-        phone = data['phone']
+        bool = data['isBorrower']
+        phone = data['mobile']
         password = data['password']
         print type(bool), type(phone)
         rating = 'A'
         interest = 5
-        query_object = profileModel(name=name, address=address, aadhar=aadhar, dob=dob, facebookID=fb, twitterID=twitter, phone=phone, isBorrower=bool, creditRating=rating, interestRate=interest, password=password)
+        query_object = profileModel(name=name, address=address, aadhar=aadhar, dob=dob, facebookID=fb, twitterID=twitter, phone=phone, isBorrower=bool, creditRating=rating, interestRate=interest, password=password, gender=gender)
         query_object.save()
         resp = {
-            'code' : 200,
+            'mobile' : phone,
         }
     else:
         resp = {
-            'code' : 400,
+            'mobile' : 400,
         }
 
     return JsonResponse(resp, safe=False)
@@ -44,7 +46,7 @@ def loginView(request):
     if request.method == "POST":
         print request.body
         data = json.loads(request.body.decode(encoding='UTF-8'))
-        phone = data['phone']
+        phone = data['mobile']
 
         password = data['password']
         print phone, password
@@ -54,15 +56,15 @@ def loginView(request):
             profile = None
         if(profile):
             resp = {
-                'bool' : profile.isBorrower,
+                'isBorrower' : profile.isBorrower,
             }
         else:
             resp = {
-                'code': 400,
+                'isBorrower': 400,
             }
     else:
         resp = {
-            'code' : 400,
+            'isBorrower' : 400,
         }
 
     return JsonResponse(resp, safe=False)
@@ -70,13 +72,20 @@ def loginView(request):
 @csrf_exempt
 def isactiveView(request):
     if request.method == "GET":
-        phone = request.GET.get('phone', None)
-        query_obj = loanNeededModel.objects.filter(personID = phone)
+        phone = request.GET.get('mobile', None)
+        print phone
+        query_obj = loanNeededModel.objects.get(personID = phone)
         data = {}
-        if query_obj.exists():
-            data = query_obj.first()
+        if query_obj:
             data['isActive'] = True
-            print data
+            data['ID'] = query_obj.pk
+            data['purpose'] = query_obj.purpose
+            data['amount'] = query_obj.amount
+            data['interest'] = query_obj.interest
+            data['tenure'] = query_obj.tenure
+            data['timeLeft'] = "10 days"
+            data['amountRemaining'] = 50000
+
         else:
             data['isActive'] = False
         return JsonResponse(data, safe=False)
@@ -93,13 +102,15 @@ def createLoanView(request):
         purpose = data['purpose']
         amount = data['amount']
         tenure = data['tenure']
-        phone = request.GET.get('phone', ' ')
+        phone = request.GET.get('mobile', None)
+        print phone
         try:
             profileObj = profileModel.objects.get(phone=phone)
         except:
             profileObj = None
-        query_obj = loanNeededModel(purpose=purpose, amount=amount, tenure=tenure, personID=profileObj, interest=profileObj.interest, riskCategory=profileObj.creditRating)
+        query_obj = loanNeededModel(purpose=purpose, amount=amount, tenure=tenure, personID=profileObj, interest=profileObj.interestRate, riskCategory=profileObj.creditRating)
         query_obj.save()
+
         resp = {
             'id' : phone,
         }
@@ -122,7 +133,17 @@ def loanDisplayView(request):
             except:
                 temp_obj = None
             if temp_obj == None:
-                data.append(x)
+                adata = {}
+                adata['ID'] = x.pk
+                print x.pk
+                adata['purpose'] = x.purpose
+                adata['amount'] = x.amount
+                adata['interest'] = x.interest
+                adata['tenure'] = x.tenure
+                adata['timeLeft'] = "10 days"
+                adata['amountRemaining'] = 50000
+                data.append(adata)
+
 
         resp = json.dumps(data)
         print resp
@@ -146,18 +167,19 @@ def loanGivenView(request):
 def paymentView(request):
     if request.method == "POST":
         data = json.loads(request.body.decode(encoding='UTF-8'))
-        phone = request.GET.get('phone', None)
+        phone = request.GET.get('mobile', None)
         amount = data['amount']
-        id = data['id']
-        query_obj = loanGivenModel.objects.get(pk=id)
-        loan_obj = loanNeededModel.objects.get(personID=query_obj.personID)
-        loan_obj.amount = loan_obj.amount - amount
+        id = data['loanId']
+        profile_obj = profileModel.objects.get(pk=phone)
+        loan_obj = loanNeededModel.objects.get(pk=id)
+        query_obj = loanGivenModel(amount=amount, loanID=loan_obj, personID=profile_obj)
+        query_obj.save()
         resp = {
-            'code' : 200,
+            'loanId' : 200,
         }
     else:
         resp = {
-            'code' : 400,
+            'loanId' : 400,
         }
 
     return JsonResponse(resp, safe=False)
