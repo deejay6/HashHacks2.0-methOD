@@ -8,27 +8,49 @@
     tools:context="com.method.hashhacks_android.activities.BorrowerInactiveActivity">
 
     <EditText
+        android:layout_marginTop="30dp"
         android:id="@+id/et_inactive_amount"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:hint="Amount" />
+
 
     <EditText
         android:id="@+id/et_inactive_purpose"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:hint="Purpose" />
+
 
     <EditText
         android:id="@+id/et_inactive_tenure"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:hint="Tenure" />
+
 
     <Button
         android:id="@+id/btn_inactive_submit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Submit" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_inactive_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_account_circle_white_24dp" />
+
 
 </LinearLayout>

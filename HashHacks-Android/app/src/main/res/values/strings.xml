@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HashHacks-Android</string>
+    <string name="app_name">Bit Kuber</string>
     <string name="borrower">Borrower</string>
     <string name="lender">Lender</string>
     <string name="title_activity_active_borrower">ActiveBorrowerActivity</string>
@@ -12,6 +12,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--<string name="url">http://192.168.1.136:8000/api/</string>-->
-    <string name="url">http://1f7ec466.ngrok.io/api/</string>
+    <string name="url">http://episodes.pythonanywhere.com/api/</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!--<string name="url">http://1f7ec466.ngrok.io/api/</string>-->
 </resources>

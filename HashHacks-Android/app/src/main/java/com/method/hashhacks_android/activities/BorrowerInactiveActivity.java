@@ -1,6 +1,7 @@
 package com.method.hashhacks_android.activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
 
     EditText etPurpose, etAmount, etTenure;
     Button btnSubmit;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,14 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
         FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
 
         initViews();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(BorrowerInactiveActivity.this, ProfileActivity.class);
+                startActivity(i);
+            }
+        });
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +83,7 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        fab = (FloatingActionButton) findViewById(R.id.fab_inactive_profile);
         etAmount = (EditText) findViewById(R.id.et_inactive_amount);
         etPurpose = (EditText) findViewById(R.id.et_inactive_purpose);
         etTenure = (EditText) findViewById(R.id.et_inactive_tenure);

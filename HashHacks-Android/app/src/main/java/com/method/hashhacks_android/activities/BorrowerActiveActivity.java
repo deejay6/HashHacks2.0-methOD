@@ -1,7 +1,10 @@
 package com.method.hashhacks_android.activities;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ public class BorrowerActiveActivity extends AppCompatActivity {
     TextView tvID, tvPurpose, tvAmount, tvInterest, tvTenure, tvTimeLeft, tvAmountRemaining;
     Button btnClaim;
     Borrower borrower;
+    FloatingActionButton fab;
 
 
     @Override
@@ -28,10 +32,18 @@ public class BorrowerActiveActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_active);
 
-        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
+        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA, getWindow());
         fetchBorrower();
 
         initViews();
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(BorrowerActiveActivity.this, ProfileActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -46,6 +58,7 @@ public class BorrowerActiveActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        fab = (FloatingActionButton) findViewById(R.id.fab_active_profile);
         tvID = (TextView) findViewById(R.id.tv_borrower_id);
         tvPurpose = (TextView) findViewById(R.id.tv_borrower_purpose);
         tvAmount = (TextView) findViewById(R.id.tv_borrower_amount);

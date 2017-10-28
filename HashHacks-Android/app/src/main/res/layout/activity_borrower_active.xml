@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,17 +29,39 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Person ID" />
+
+        <TextView
+            android:id="@+id/tv_borrower_person_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Purpose" />
 
         <TextView
             android:id="@+id/tv_borrower_purpose"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp" />
 
     </LinearLayout>
 
@@ -46,17 +69,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Amount" />
 
         <TextView
             android:id="@+id/tv_borrower_amount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp" />
 
     </LinearLayout>
 
@@ -64,17 +89,39 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
         android:orientation="horizontal">
 
         <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Amount Left" />
+
+        <TextView
+            android:id="@+id/tv_borrower_amount_remaining"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Interest" />
 
         <TextView
             android:id="@+id/tv_borrower_interest"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp" />
 
     </LinearLayout>
 
@@ -82,17 +129,19 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Tenure" />
 
         <TextView
             android:id="@+id/tv_borrower_tenure"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp" />
 
     </LinearLayout>
 
@@ -100,42 +149,37 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Time left" />
 
         <TextView
             android:id="@+id/tv_borrower_time_left"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amount Remaining" />
-
-        <TextView
-            android:id="@+id/tv_borrower_amount_remaining"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_marginLeft="40dp" />
 
     </LinearLayout>
 
 
     <Button
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="140dp"
         android:id="@+id/btn_borrower_claim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Claim" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_active_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_account_circle_white_24dp" />
 </LinearLayout>

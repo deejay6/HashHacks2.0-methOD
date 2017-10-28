@@ -2,6 +2,8 @@ package com.method.hashhacks_android.api;
 
 import com.method.hashhacks_android.models.Borrower;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -19,6 +21,22 @@ public interface BorrowerApi {
     @POST("createloan")
     Call<PuneetResult> createLoan(@Body LoanDetail loanDetail, @Query("mobile") String mobile);
 
+    @GET("profile")
+    Call<ArrayList<ProfileResult>> getProfile(@Query("mobile") String mobile);
+
+    public class ProfileResult {
+        private String riskCategory;
+        private String interest;
+
+        public String getRiskCategory() {
+            return riskCategory;
+        }
+
+        public String getInterest() {
+            return interest;
+        }
+    }
+
     public class LoanDetail {
         private String purpose, tenure;
         private Integer amount;
@@ -30,7 +48,7 @@ public interface BorrowerApi {
         }
     }
 
-    public class PuneetResult{
+    public class PuneetResult {
         String loanID;
 
         public String getLoanID() {

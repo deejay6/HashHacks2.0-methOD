@@ -21,11 +21,15 @@
         <activity android:name=".activities.SignUpActivity" />
         <activity
             android:name=".activities.LenderActivity"
-            android:label="@string/title_activity_active_borrower"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.BorrowerActiveActivity" />
         <activity android:name=".activities.BorrowerInactiveActivity" />
-        <activity android:name=".activities.ProfileActivity"></activity>
+        <activity android:name=".activities.ProfileActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -27,7 +27,7 @@ public class LenderActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lender);
 
-        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
+        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA, getWindow());
 
         fragmentManager = getSupportFragmentManager();
 
@@ -92,9 +92,6 @@ public class LenderActivity extends AppCompatActivity
         } else if (id == R.id.nav_portfolio) {
             fragmentManager.beginTransaction().replace(R.id.content_main, PortfolioFragment.newInstance()).commit();
 
-        } else if (id == R.id.nav_profile) {
-            Intent i = new Intent(LenderActivity.this, ProfileActivity.class);
-            startActivity(i);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

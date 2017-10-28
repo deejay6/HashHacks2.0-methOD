@@ -4,10 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ public class PortfolioFragment extends Fragment {
     private ArrayList<LoanGiven> loanGivens;
     private View view;
     private TableView tableView;
+    private RecyclerView recyclerView;
 
     public PortfolioFragment() {
 
@@ -84,31 +88,80 @@ public class PortfolioFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        tableView = (TableView) view.findViewById(R.id.fragment_portfolio_table);
+//        tableView = (TableView) view.findViewById(R.id.fragment_portfolio_table);
+//
+//        TableColumnWeightModel columnModel = new TableColumnWeightModel(6);
+////        columnModel.setColumnWeight(0, 2);
+////        columnModel.setColumnWeight(1, 1);
+////        columnModel.setColumnWeight(2, 4);
+////        columnModel.setColumnWeight(3, 3);
+////        columnModel.setColumnWeight(4, 2);
+//        tableView.setColumnModel(columnModel);
+//        tableView.setHeaderAdapter(new HeaderAdapter(getContext()));
+//
+//        /*I dont understand the code written below. Its was suggested as a hack on github as Header Adapter was not performing well*/
+//
+//        ViewTreeObserver vto = tableView.getViewTreeObserver();
+//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                tableView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                tableView.setHeaderAdapter(new HeaderAdapter(getContext()));
+//            }
+//        });
+//
+//        tableView.setDataAdapter(new TableAdapter(getContext(), loanGivens));
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(6);
-//        columnModel.setColumnWeight(0, 2);
-//        columnModel.setColumnWeight(1, 1);
-//        columnModel.setColumnWeight(2, 4);
-//        columnModel.setColumnWeight(3, 3);
-//        columnModel.setColumnWeight(4, 2);
-        tableView.setColumnModel(columnModel);
-        tableView.setHeaderAdapter(new HeaderAdapter(getContext()));
+        recyclerView = (RecyclerView) view.findViewById(R.id.fragment_portfolio_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        /*I dont understand the code written below. Its was suggested as a hack on github as Header Adapter was not performing well*/
-
-        ViewTreeObserver vto = tableView.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                tableView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                tableView.setHeaderAdapter(new HeaderAdapter(getContext()));
-            }
-        });
-
-        tableView.setDataAdapter(new TableAdapter(getContext(), loanGivens));
+        recyclerView.setAdapter(new PortfolioAdapter());
     }
 
+    private class PortfolioHolder extends RecyclerView.ViewHolder {
+
+        TextView tvBorrowerId, tvAmount, tvWhen, tvTenure, tvInterest;
+
+        public PortfolioHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+
+    private class PortfolioAdapter extends RecyclerView.Adapter<PortfolioHolder> {
+
+        @Override
+        public PortfolioHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View convertView = li.inflate(R.layout.list_item_portfolio, null);
+
+            PortfolioHolder userViewHolder = new PortfolioHolder(convertView);
+
+            userViewHolder.tvBorrowerId = (TextView) convertView.findViewById(R.id.list_item_portfolio_borrower_id);
+            userViewHolder.tvAmount = (TextView) convertView.findViewById(R.id.list_item_portfolio_amount);
+            userViewHolder.tvWhen = (TextView) convertView.findViewById(R.id.list_item_portfolio_when);
+            userViewHolder.tvTenure = (TextView) convertView.findViewById(R.id.list_item_portfolio_tenure);
+            userViewHolder.tvInterest = (TextView) convertView.findViewById(R.id.list_item_portfolio_borrower_interest);
+
+
+            return userViewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(PortfolioHolder holder, int position) {
+            holder.tvBorrowerId.setText(loanGivens.get(position).getBorrowerID());
+            holder.tvAmount.setText(loanGivens.get(position).getAmount() + "");
+            holder.tvWhen.setText(loanGivens.get(position).getWhen());
+            holder.tvTenure.setText(loanGivens.get(position).getTenure());
+            holder.tvInterest.setText(loanGivens.get(position).getInterest() + "")  ;
+        }
+
+        @Override
+        public int getItemCount() {
+            return loanGivens.size();
+        }
+    }
 
     private class HeaderAdapter extends TableHeaderAdapter {
 
