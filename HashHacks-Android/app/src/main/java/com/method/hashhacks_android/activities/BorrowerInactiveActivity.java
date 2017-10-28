@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.method.hashhacks_android.FontsOverride;
 import com.method.hashhacks_android.R;
 import com.method.hashhacks_android.api.BorrowerApi;
 import com.method.hashhacks_android.models.Borrower;
@@ -30,6 +31,8 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower_inactive);
+
+        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
 
         initViews();
 

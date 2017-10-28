@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.method.hashhacks_android.FontsOverride;
 import com.method.hashhacks_android.R;
 import com.method.hashhacks_android.api.BorrowerApi;
 import com.method.hashhacks_android.api.LoginApi;
@@ -32,6 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
+
         sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
 
         findViews();
@@ -83,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                                         } else {
-                                            Toast.makeText(LoginActivity.this, "Response is null", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                                         }
 
 
@@ -103,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         } else {
-                            Toast.makeText(LoginActivity.this, "Response is null", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                         }
                     }
 

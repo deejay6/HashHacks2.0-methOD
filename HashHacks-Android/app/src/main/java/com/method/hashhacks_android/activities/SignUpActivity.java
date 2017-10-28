@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.method.hashhacks_android.FontsOverride;
 import com.method.hashhacks_android.R;
 import com.method.hashhacks_android.api.SignupApi;
 
@@ -38,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
 
         sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
         findViews();

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.method.hashhacks_android.FontsOverride;
 import com.method.hashhacks_android.fragments.ActiveBorrowersFragment;
 import com.method.hashhacks_android.R;
 import com.method.hashhacks_android.fragments.PortfolioFragment;
@@ -25,6 +26,8 @@ public class LenderActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lender);
+
+        FontsOverride.applyFontForToolbarTitle(this, FontsOverride.FONT_PROXIMA_NOVA,getWindow());
 
         fragmentManager = getSupportFragmentManager();
 
