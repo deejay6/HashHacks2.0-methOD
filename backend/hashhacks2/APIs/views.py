@@ -165,7 +165,7 @@ def loanDisplayView(request):
                 print x.pk
                 adata['purpose'] = x.purpose
                 adata['amount'] = x.amount
-                adata['interest'] = x.getInterestRate()[0]
+                adata['interest'], adata['riskCategory'] = x.getInterestRate()
                 adata['tenure'] = x.tenure
                 adata['timeLeft'] = x.getTimeLeft() + " days"
                 adata['amountRemaining'] = x.getRemaining()
