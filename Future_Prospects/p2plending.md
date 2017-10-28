@@ -53,7 +53,7 @@ What if a user like Bob is unable to provide sufficient collateral for the loan 
 
 One possible solution is for Bob to purchase collateral from a distributed collateralized trust or dCT. A dCT is a collection of users that pool a certain value of funds in essentially a term deposit. This term deposit serves as collateral for a loan in the event that the borrower defaults. In return for this risk, the borrower pays each member of the trust a fee that makes up the effective interest rate of the term deposit. 
 
-dCTs however, confer a number of advantages:
+#### dCTs however, confer a number of advantages:
 
 Overall level of risk is spread <br />
 Multiple layers of due diligence <br />
