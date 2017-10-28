@@ -6,7 +6,7 @@ from datetime import datetime
 import pytz
 import random
 from .utils.lr import getCreditRating
-from .utils.socialScore.py import calculateSS
+# from .utils.socialScore.py import calculateSS
 
 # Create your models here.
 class profileModel(models.Model):
@@ -64,8 +64,12 @@ class loanNeededModel(models.Model):
         else:
             return "0"
     
-    def getInterestRate(self):
+    def getInterestRate(self, check=1, amo=0):
         aadmi = self.personID
+        if check == 1:
+            am = self.amount
+        else:
+            am = amo
         person = [aadmi.facebook_twitter,
             aadmi.postpaid,
             aadmi.late_bill_days_avg,
@@ -73,7 +77,7 @@ class loanNeededModel(models.Model):
             aadmi.similar_locations,
             aadmi.network_bytes,
             aadmi.daily_sms,
-            self.amount,
+            am,
             aadmi.usage_hours_per_week,
             aadmi.pan,
             aadmi.Property_Area]

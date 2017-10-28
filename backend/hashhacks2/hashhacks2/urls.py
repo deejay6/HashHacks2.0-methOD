@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from APIs.views import signupView, loginView, isactiveView, createLoanView, loanDisplayView, loanGivenView, paymentView
+from APIs.views import signupView, loginView, isactiveView, createLoanView, loanDisplayView, loanGivenView, paymentView, borrowerProfile
 urlpatterns = [
     url(r'^api/payment', paymentView),
     url(r'^api/loangiven', loanGivenView),
@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^api/isactive', isactiveView),
     url(r'^api/signup', signupView),
     url(r'^api/login', loginView),
+    url(r'^api/profile', borrowerProfile),
     url(r'^admin/', admin.site.urls),
 ]

@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from models import profileModel, loanGivenModel, loanNeededModel
 from .utils.lr import getCreditRating
-from .utils.socialScore import calculateSS
+# from .utils.socialScore import calculateSS
 import random
 # Create your views here.
 
@@ -217,4 +217,53 @@ def paymentView(request):
             'loanId' : 400,
         }
 
+    return JsonResponse(resp, safe=False)
+
+@csrf_exempt
+def borrowerProfile(request):
+    phone = request.GET.get('mobile', None)
+    try:
+        profile_obj = profileModel.objects.get(pk=phone)
+    except:
+        return JsonResponse({"code" : 400}, safe=False)
+    dummyLoan = loanNeededModel(personID = profile_obj)
+    a= dummyLoan.getInterestRate(check=0, amo=100)
+    b= dummyLoan.getInterestRate(check=0, amo=200)
+    c= dummyLoan.getInterestRate(check=0, amo=20000)
+    d= dummyLoan.getInterestRate(check=0, amo=30000)
+    resp = [
+            {
+            "riskCategory" : a[0],
+            "interest" : a[1]
+        },
+        {
+            "riskCategory" : b[0],
+            "interest" : b[1]
+        },
+        {
+            "riskCategory" : c[0],
+            "interest" : c[1]
+        },
+        {
+            "riskCategory" : d[0],
+            "interest" : d[1]
+        }
+    ]
+        # "result" : {
+        #     "riskCategory" : a[0],
+        #     "interest" : a[1]
+        # },
+        # "tenThousand" : {
+        #     "riskCategory" : b[0],
+        #     "interest" : b[1]
+        # },
+        # "twentyThousand" : {
+        #     "riskCategory" : c[0],
+        #     "interest" : c[1]
+        # },
+        # "greater" : {
+        #     "riskCategory" : d[0],
+        #     "interest" : d[1]
+        # }
+    # }
     return JsonResponse(resp, safe=False)
