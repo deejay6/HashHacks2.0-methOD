@@ -79,6 +79,10 @@ class loanNeededModel(models.Model):
         rate, riskCategory = getCreditRating(person)
         return (rate, riskCategory)
 
+    def setStuff(self, rate, risk):
+        self.interest = rate
+        self.riskCategory = risk
+
 class loanGivenModel(models.Model):
     personID = models.ForeignKey(profileModel, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)

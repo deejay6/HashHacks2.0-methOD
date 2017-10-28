@@ -136,8 +136,7 @@ def createLoanView(request):
             profileObj = None
         query_obj = loanNeededModel(purpose=purpose, amount=amount, tenure=tenure, personID=profileObj, interest=profileObj.interestRate, riskCategory=profileObj.creditRating)
         rate,risk = query_obj.getInterestRate()
-        query_obj["interest"] = rate
-        query_obj["riskCategory"] = risk
+        query_obj.setStuff(rate, risk)
         query_obj.save()
 
         resp = {
@@ -158,7 +157,7 @@ def loanDisplayView(request):
         data = []
         for x in query_obj:
             try:
-                temp_obj = loanGivenModel.objects.get(loanID=x, personID = phone)
+                temp_obj = loanGivenModel.objects.get(loanID=x.pk, personID = phone)
             except Exception as DoesNotExist:
                 adata = {}
                 adata['ID'] = x.pk
