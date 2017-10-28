@@ -152,12 +152,20 @@ def loanDisplayView(request):
 @csrf_exempt
 def loanGivenView(request):
     if request.method == "GET":
-        phone = request.GET.get('phone', None)
+        phone = request.GET.get('mobile', None)
         query_obj = loanGivenModel.objects.all()
+        profile_obj = profileModel.objects.get(pk=phone)
         data = []
         for x in query_obj:
-            if x.personID == phone:
-                data.append(x)
+            if x.personID == profile_obj:
+                dic = {}
+                dic['ID'] = x.pk
+                dic['borrowerID'] = 5
+                dic['amount'] = x.amount
+                dic['when'] = '12/06/2017'
+                dic['tenure'] = '20 days'
+                dic['interest'] = 5
+                data.append(dic)
 
         resp = json.dumps(data)
         print resp

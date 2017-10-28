@@ -18,7 +18,7 @@ from django.contrib import admin
 from APIs.views import signupView, loginView, isactiveView, createLoanView, loanDisplayView, loanGivenView, paymentView
 urlpatterns = [
     url(r'^api/payment', paymentView),
-    url(r'^api/laongiven', loanGivenView),
+    url(r'^api/loangiven', loanGivenView),
     url(r'^api/loandisplay', loanDisplayView),
     url(r'^api/createloan', createLoanView),
     url(r'^api/isactive', isactiveView),
