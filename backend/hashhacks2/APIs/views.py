@@ -97,7 +97,10 @@ def isactiveView(request):
     if request.method == "GET":
         phone = request.GET.get('mobile', None)
         print phone
-        query_obj = loanNeededModel.objects.get(personID = phone)
+        try:
+            query_obj = loanNeededModel.objects.get(personID = phone)
+        except:
+            query_obj = None
         data = {}
         if query_obj:
             data['isActive'] = True
@@ -155,21 +158,18 @@ def loanDisplayView(request):
         data = []
         for x in query_obj:
             try:
-                temp_obj = loanGivenModel.object.get(loanID=x, personID = phone)
-            except:
-                temp_obj = None
-            if temp_obj == None:
+                temp_obj = loanGivenModel.objects.get(loanID=x, personID = phone)
+            except Exception as DoesNotExist:
                 adata = {}
                 adata['ID'] = x.pk
                 print x.pk
                 adata['purpose'] = x.purpose
                 adata['amount'] = x.amount
-                adata['interest'] = x.getInterestRate()
+                adata['interest'] = x.getInterestRate()[0]
                 adata['tenure'] = x.tenure
                 adata['timeLeft'] = x.getTimeLeft() + " days"
                 adata['amountRemaining'] = x.getRemaining()
                 data.append(adata)
-
 
         resp = json.dumps(data)
         print resp
@@ -190,7 +190,7 @@ def loanGivenView(request):
                 dic['amount'] = x.amount
                 dic['when'] = x.getWhen()
                 dic['tenure'] = x.loanID.tenure
-                dic['interest'] = x.loanID.getInterestRate()
+                dic['interest'] = x.loanID.getInterestRate()[0]
                 data.append(dic)
 
         resp = json.dumps(data)

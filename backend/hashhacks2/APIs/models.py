@@ -65,7 +65,7 @@ class loanNeededModel(models.Model):
     
     def getInterestRate(self):
         aadmi = self.personID
-        person = (aadmi.facebook_twitter,
+        person = [aadmi.facebook_twitter,
             aadmi.postpaid,
             aadmi.late_bill_days_avg,
             aadmi.Education,
@@ -75,9 +75,8 @@ class loanNeededModel(models.Model):
             self.amount,
             aadmi.usage_hours_per_week,
             aadmi.pan,
-            aadmi.Property_Area)
-        rate, riskCategory = getCreditRating(person           
-        )
+            aadmi.Property_Area]
+        rate, riskCategory = getCreditRating(person)
         return (rate, riskCategory)
 
 class loanGivenModel(models.Model):

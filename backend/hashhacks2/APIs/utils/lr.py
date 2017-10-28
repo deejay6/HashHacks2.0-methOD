@@ -20,11 +20,11 @@ model.fit(x, y)
 
 def getCreditRating(person):
     """
-        person is a tuple ( facebook_twitter, postpaid, late_bill_days_avg
+        person is a list ( facebook_twitter, postpaid, late_bill_days_avg
             Education, similar_locations, network_bytes, daily_sms,	LoanAmount
             usage_hours_per_week,	PAN,	Property_Area )
     """
-    predictedProba = model.predict_proba(person)
+    predictedProba = model.predict_proba(np.array(person).reshape(1, -1))
     creditRating = int(predictedProba[0][1]*100)
     interestRate = 0
     riskCategory = "A"
