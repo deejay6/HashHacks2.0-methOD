@@ -152,7 +152,7 @@ def createLoanView(request):
 @csrf_exempt
 def loanDisplayView(request):
     if request.method == "GET":
-        phone = request.GET.get('phone', None)
+        phone = request.GET.get('mobile', None)
         query_obj = loanNeededModel.objects.all()
         data = []
         for x in query_obj:
@@ -161,6 +161,7 @@ def loanDisplayView(request):
             except Exception as DoesNotExist:
                 adata = {}
                 adata['ID'] = x.pk
+                adata['personID'] = phone
                 print x.pk
                 adata['purpose'] = x.purpose
                 adata['amount'] = x.amount
