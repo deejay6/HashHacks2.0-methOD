@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from models import profileModel, loanGivenModel, loanNeededModel
 from .utils.lr import getCreditRating
+from .utils.socialScore import calculateSS
 import random
 # Create your views here.
 
