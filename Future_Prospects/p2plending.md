@@ -15,7 +15,7 @@ Peer-to-peer (P2P) lending has emerged as a means to decentralise the oligopolis
 ## Loan Contracts
 ![Image](https://github.com/papajijaat/HashHacks2.0-methOD/blob/master/Future_Prospects/alicebob.png?raw=true)
 
-Step 1: Bob creates a loan contract
-Step 2: Alice accepts the loan contract
-Step 3: Bob accepts Alice's offer and sends to the contract to the arbiter
-Step 4: Funds are transferred; repayment-receipt tracking begins (last signed receipt)
+Step 1: Bob creates a loan contract<br/>
+Step 2: Alice accepts the loan contract<br/>
+Step 3: Bob accepts Alice's offer and sends to the contract to the arbiter<br/>
+Step 4: Funds are transferred; repayment-receipt tracking begins (last signed receipt)<br/>
