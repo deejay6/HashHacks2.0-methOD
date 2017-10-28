@@ -1,5 +1,6 @@
 package com.method.hashhacks_android.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
@@ -89,7 +90,8 @@ public class LenderActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.content_main, PortfolioFragment.newInstance()).commit();
 
         } else if (id == R.id.nav_profile) {
-
+            Intent i = new Intent(LenderActivity.this, ProfileActivity.class);
+            startActivity(i);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

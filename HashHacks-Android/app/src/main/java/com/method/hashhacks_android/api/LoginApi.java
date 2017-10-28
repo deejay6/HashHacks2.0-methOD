@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 public interface LoginApi {
 
     @POST("login")
-    Call<Boolean> checkIfBorrower(@Body LoginDetails loginDetails, @Query("mobile") String mobile);
+    Call<Res> checkIfBorrower(@Body LoginDetails loginDetails, @Query("mobile") String mobile);
 
 
     public class LoginDetails {
@@ -24,6 +24,15 @@ public interface LoginApi {
         public LoginDetails(String mobile, String password) {
             this.mobile = mobile;
             this.password = password;
+        }
+    }
+
+
+    public class Res{
+        Boolean isBorrower;
+
+        public Boolean getBorrower() {
+            return isBorrower;
         }
     }
 }

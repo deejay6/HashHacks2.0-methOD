@@ -47,13 +47,13 @@ public class LoginActivity extends AppCompatActivity {
                 Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(url).build();
                 LoginApi loginApi = retrofit.create(LoginApi.class);
 
-                loginApi.checkIfBorrower(new LoginApi.LoginDetails(mobile, password), mobile).enqueue(new Callback<Boolean>() {
+                loginApi.checkIfBorrower(new LoginApi.LoginDetails(mobile, password), mobile).enqueue(new Callback<LoginApi.Res>() {
                     @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    public void onResponse(Call<LoginApi.Res> call, Response<LoginApi.Res> response) {
 
                         boolean isBorrower;
                         if (response.body() != null) {
-                            isBorrower = response.body();
+                            isBorrower = response.body().getBorrower();
 
 
                             sharedPreferences.edit().putString("mobile", mobile).apply();
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
+                    public void onFailure(Call<LoginApi.Res> call, Throwable t) {
 
                     }
                 });

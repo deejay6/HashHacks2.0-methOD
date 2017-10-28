@@ -53,11 +53,11 @@
 
 
     <EditText
-        android:id="@+id/et_signup_email"
+        android:id="@+id/et_signup_mobile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:hint="Mobile"
+        android:inputType="phone" />
 
     <EditText
         android:id="@+id/et_signup_date"
@@ -77,6 +77,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lender" />
+
+    <EditText
+        android:id="@+id/et_signup_facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Facebook handle" />
+
+    <EditText
+        android:id="@+id/et_signup_twitter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Twitter handle" />
+
 
     <Button
         android:id="@+id/btn_signup_enter"

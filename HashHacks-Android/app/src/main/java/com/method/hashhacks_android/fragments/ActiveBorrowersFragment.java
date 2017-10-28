@@ -1,13 +1,19 @@
 package com.method.hashhacks_android.fragments;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,7 +92,7 @@ public class ActiveBorrowersFragment extends Fragment {
     private void initViews(View view) {
         tableView = (TableView) view.findViewById(R.id.fragment_active_borrowers_table);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(8);
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(9);
 //        columnModel.setColumnWeight(0, 2);
 //        columnModel.setColumnWeight(1, 1);
 //        columnModel.setColumnWeight(2, 4);
@@ -166,6 +172,13 @@ public class ActiveBorrowersFragment extends Fragment {
                     TextView tv_time_left = (TextView) convertView;
                     tv_time_left.setText("Time Left");
                     break;
+
+                case 8:
+                    convertView = li.inflate(R.layout.table_row_tv, null);
+                    TextView tv_invest = (TextView) convertView;
+                    tv_invest.setText("Invest");
+                    break;
+
             }
 
             return convertView;
@@ -179,7 +192,7 @@ public class ActiveBorrowersFragment extends Fragment {
         }
 
         @Override
-        public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
+        public View getCellView(final int rowIndex, int columnIndex, ViewGroup parentView) {
             LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View convertView = null;
@@ -241,6 +254,69 @@ public class ActiveBorrowersFragment extends Fragment {
                     tv_time_left.setText(loans.get(rowIndex).getTimeLeft());
                     break;
 
+                case 8:
+                    convertView = li.inflate(R.layout.table_row_btn, null);
+
+                    Button btn_invest = (Button) convertView;
+                    btn_invest.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final String loanId = loans.get(rowIndex).getID();
+
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                            alertDialog.setTitle("Payment");
+
+
+                            final EditText input = new EditText(getContext());
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.MATCH_PARENT);
+                            input.setLayoutParams(lp);
+                            alertDialog.setView(input);
+
+
+                            alertDialog.setPositiveButton("YES",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(final DialogInterface dialog, int which) {
+                                            String amount = input.getText().toString();
+
+                                            String url = getResources().getString(R.string.url);
+                                            Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(url).build();
+
+                                            LenderApi lenderApi = retrofit.create(LenderApi.class);
+
+                                            lenderApi.doPayment(new LenderApi.Pay(Integer.valueOf(amount), loanId), getContext().getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<LenderApi.PaymentResult>() {
+                                                @Override
+                                                public void onResponse(Call<LenderApi.PaymentResult> call, Response<LenderApi.PaymentResult> response) {
+                                                    if (response.body() != null) {
+
+                                                        Toast.makeText(getContext(), "Payment Made", Toast.LENGTH_SHORT).show();
+                                                        dialog.cancel();
+
+                                                    } else {
+                                                        Toast.makeText(ActiveBorrowersFragment.this.getContext(), "Server error", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<LenderApi.PaymentResult> call, Throwable t) {
+
+                                                }
+                                            });
+                                        }
+                                    });
+
+                            alertDialog.setNegativeButton("NO",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            alertDialog.show();
+                        }
+                    });
+                    break;
             }
 
             return convertView;

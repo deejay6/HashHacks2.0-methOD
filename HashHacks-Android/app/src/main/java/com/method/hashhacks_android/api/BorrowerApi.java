@@ -17,7 +17,7 @@ public interface BorrowerApi {
     Call<Borrower> getBorrower(@Query("mobile") String mobile);
 
     @POST("createloan")
-    Call<String> createLoan(@Body LoanDetail loanDetail, @Query("mobile") String mobile);
+    Call<PuneetResult> createLoan(@Body LoanDetail loanDetail, @Query("mobile") String mobile);
 
     public class LoanDetail {
         private String purpose, tenure;
@@ -27,6 +27,14 @@ public interface BorrowerApi {
             this.purpose = purpose;
             this.tenure = tenure;
             this.amount = amount;
+        }
+    }
+
+    public class PuneetResult{
+        String loanID;
+
+        public String getLoanID() {
+            return loanID;
         }
     }
 }

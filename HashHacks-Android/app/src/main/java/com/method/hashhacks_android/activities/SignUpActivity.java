@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +22,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText etName, etAadhar, etAddress, etEmail, etDOB, etPassword, etConfirmPassword;
+    EditText etName, etAadhar, etAddress, etMobile, etDOB, etPassword, etConfirmPassword, etFacebook, etTwitter;
     RadioButton rbMale, rbFemale;
     RadioButton rbBorrower, rbLender;
     Button btnSignup;
+
+    public static final String TAG = "Singup";
 
 
     SharedPreferences sharedPreferences;
@@ -51,18 +54,23 @@ public class SignUpActivity extends AppCompatActivity {
 
                 SignupApi signupApi = retrofit.create(SignupApi.class);
 
-                signupApi.createUser(user).enqueue(new Callback<String>() {
+                signupApi.createUser(user).enqueue(new Callback<SignupApi.Result>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.body() != null) {
-                            String mobile = response.body();
+                    public void onResponse(Call<SignupApi.Result> call, Response<SignupApi.Result> response) {
 
-                            sharedPreferences.edit().putString("mobile", mobile).apply();
+
+                        Log.d(TAG, "onResponse: " + response.body());
+                        if (response.body() != null) {
+                            SignupApi.Result mobile = response.body();
+                            Log.d(TAG, "onResponse: " + "before");
+                            sharedPreferences.edit().putString("mobile", mobile.getMobile()).apply();
 
                             if (rbBorrower.isChecked()) {
+                                Log.d(TAG, "onResponse: " + "Borrower");
                                 Intent i = new Intent(SignUpActivity.this, BorrowerInactiveActivity.class);
                                 startActivity(i);
                             } else {
+                                Log.d(TAG, "onResponse: " + "Lender");
                                 Intent i = new Intent(SignUpActivity.this, LenderActivity.class);
                                 startActivity(i);
                             }
@@ -74,8 +82,8 @@ public class SignUpActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
+                    public void onFailure(Call<SignupApi.Result> call, Throwable t) {
+                        Log.d(TAG, "onFailure: " + t.getMessage());
                     }
                 });
 
@@ -88,23 +96,27 @@ public class SignUpActivity extends AppCompatActivity {
         SignupApi.User user = new SignupApi.User(etName.getText().toString(),
                 etAadhar.getText().toString(),
                 etAddress.getText().toString(),
-                etEmail.getText().toString(),
+                etMobile.getText().toString(),
                 etDOB.getText().toString(),
                 etPassword.getText().toString(),
                 rbMale.isChecked(),
-                rbBorrower.isChecked());
+                rbBorrower.isChecked(),
+                etFacebook.getText().toString(),
+                etTwitter.getText().toString());
 
 
         return user;
     }
 
     private void findViews() {
+        etFacebook = (EditText) findViewById(R.id.et_signup_facebook);
+        etTwitter = (EditText) findViewById(R.id.et_signup_twitter);
         etName = (EditText) findViewById(R.id.et_signup_name);
         etPassword = (EditText) findViewById(R.id.et_signup_password);
         etConfirmPassword = (EditText) findViewById(R.id.et_signup_confirm_password);
         etAadhar = (EditText) findViewById(R.id.et_signup_aadhar);
         etAddress = (EditText) findViewById(R.id.et_signup_addresss);
-        etEmail = (EditText) findViewById(R.id.et_signup_email);
+        etMobile = (EditText) findViewById(R.id.et_signup_mobile);
         etDOB = (EditText) findViewById(R.id.et_signup_date);
         rbBorrower = (RadioButton) findViewById(R.id.rb_signup_borrower);
         rbLender = (RadioButton) findViewById(R.id.rb_signup_lender);

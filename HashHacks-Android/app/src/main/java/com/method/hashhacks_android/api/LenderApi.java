@@ -6,7 +6,9 @@ import com.method.hashhacks_android.models.LoanNeeded;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -22,4 +24,24 @@ public interface LenderApi {
     @GET("loangiven")
     Call<ArrayList<LoanGiven>> getLoanGiven(@Query("mobile") String mobile);
 
+    @POST("payment")
+    Call<PaymentResult> doPayment(@Body Pay pay, @Query("mobile") String mobile);
+
+    public class Pay {
+        Integer amount;
+        String loanId;
+
+        public Pay(Integer amount, String loanId) {
+            this.amount = amount;
+            this.loanId = loanId;
+        }
+    }
+
+    public class PaymentResult{
+        String loanId;
+
+        public String getLoanId() {
+            return loanId;
+        }
+    }
 }

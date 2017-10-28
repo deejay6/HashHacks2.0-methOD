@@ -10,17 +10,19 @@ import retrofit2.http.POST;
 
 public interface SignupApi {
     @POST("signup")
-    Call<String> createUser(@Body User user);
+    Call<Result> createUser(@Body User user);
 
     public class User {
-        String name, aadhar, address, email, dob, password;
+        String name, aadhar, address, mobile, dob, password, facebook, twitter;
         Boolean isMale, isBorrower;
 
-        public User(String name, String aadhar, String address, String email, String dob, String password, Boolean isMale, Boolean isBorrower) {
+        public User(String name, String aadhar, String address, String mobile, String dob, String password, Boolean isMale, Boolean isBorrower, String facebook, String twitter) {
             this.name = name;
+            this.facebook = facebook;
+            this.twitter = twitter;
             this.aadhar = aadhar;
             this.address = address;
-            this.email = email;
+            this.mobile = mobile;
             this.dob = dob;
             this.password = password;
             this.isMale = isMale;
@@ -28,5 +30,17 @@ public interface SignupApi {
         }
 
 
+    }
+
+    public class Result{
+        String mobile;
+
+        public String getMobile() {
+            return mobile;
+        }
+
+        public Result(String mobile) {
+            this.mobile = mobile;
+        }
     }
 }

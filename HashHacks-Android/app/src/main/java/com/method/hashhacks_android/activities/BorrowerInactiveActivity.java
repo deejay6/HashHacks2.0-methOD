@@ -3,6 +3,7 @@ package com.method.hashhacks_android.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BorrowerInactiveActivity extends AppCompatActivity {
+
+    public static final String TAG = "BorrInAc";
 
     EditText etPurpose, etAmount, etTenure;
     Button btnSubmit;
@@ -41,9 +44,10 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
                 BorrowerApi.LoanDetail loanDetail = new BorrowerApi.LoanDetail(etPurpose.getText().toString(),
                         etTenure.getText().toString(),
                         Integer.valueOf(etAmount.getText().toString()));
-                borrowerApi.createLoan(loanDetail, getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<String>() {
+                Log.d(TAG, "onClick: " + getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123"));
+                borrowerApi.createLoan(loanDetail, getSharedPreferences(LoginActivity.SHARED_PREFS_NAME, MODE_PRIVATE).getString("mobile", "123")).enqueue(new Callback<BorrowerApi.PuneetResult>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
+                    public void onResponse(Call<BorrowerApi.PuneetResult> call, Response<BorrowerApi.PuneetResult> response) {
                         if (response.body() != null) {
 
 //                            String loadId = response.body();
@@ -57,7 +61,7 @@ public class BorrowerInactiveActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<BorrowerApi.PuneetResult> call, Throwable t) {
 
                     }
                 });
