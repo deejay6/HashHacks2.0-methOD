@@ -6,6 +6,7 @@ from datetime import datetime
 import pytz
 import random
 from .utils.lr import getCreditRating
+from .utils.socialScore.py import calculateSS
 
 # Create your models here.
 class profileModel(models.Model):
